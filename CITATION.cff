@@ -6,10 +6,11 @@ message: >-
   If you use this software, please cite both the article and this archive.
 type: software
 authors:
-  - given-names: "[GIVEN NAME]"
-    family-names: "[FAMILY NAME]"
+  - given-names: "Long"
+    family-names: "Huang"
+    email: "hl@airiy.com"
     # orcid: "https://orcid.org/0000-0000-0000-0000"
-    # affiliation: "[INSTITUTION]"
+    affiliation: "AIRIY"
 abstract: >-
   Reproduces the numerical claims of the paper "On the function field
   analogue of the Goormaghtigh equation": the closed-form geometric genus of
