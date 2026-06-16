@@ -3,7 +3,7 @@
 # dependencies = ["sympy"]
 # ///
 r"""
-L3 NUMERICAL GENUS — Proposition P1 (function-field Goormaghtigh theorem)
+Numerical genus verification  --  function-field Goormaghtigh theorem
 ========================================================================
 
 Theorem (characteristic 0).  Over an algebraically closed field k of
@@ -27,13 +27,12 @@ If g >= 1 then P^1 admits NO non-constant map to \widetilde C_{m,n}
 0 = g(P^1) >= g(C) >= 1, contradiction).  Hence every \bar k(t)-point is
 constant.  This is the clean, unconditional core of the proof.
 
-This L3 script PUSHES the genus evidence to the computational frontier and
-adds four cross-checks:
+This script verifies the genus claims of the paper and adds four cross-checks:
 
   TASK 1  Multi-scale genus scan over all gcd(m,n)=1, 3 <= n < m <= 14,
           plus samples m in {15,16,20}.  Verify  min>=3 & m!=n => g>=1 with
           NO exception (coprime pairs are used as a dense sample; the theorem
-          needs only m!=n).  CSV -> data/L3num_genus.csv.  Genus by Riemann-
+          needs only m!=n).  CSV -> data/genus_table.csv.  Genus by Riemann-
           Hurwitz on pi_X : C -> P^1_X (deg n-1), cross-checked against the
           symmetric pi_Y projection (genus is symmetric in m,n).
 
@@ -635,7 +634,7 @@ def main():
     os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
 
     print("=" * 74)
-    print("L3 NUMERICAL GENUS  --  Proposition P1 (function-field Goormaghtigh)")
+    print("NUMERICAL GENUS  --  function-field Goormaghtigh")
     print("=" * 74)
 
     scan = task1_scan()
@@ -675,7 +674,7 @@ def main():
     print(f"\n  STATUS = {status}  genus_min_gcd1={genus_min}  "
           f"nonconstant={nonconstant}  diagonal=triangular(A000217)={triangular_ok}"
           f"  (OEIS network hit={oeis_network}, optional)")
-    print(f"\nDECISION_LINE status={status} genus_min_gcd1={genus_min} "
+    print(f"\nSUMMARY status={status} genus_min_gcd1={genus_min} "
           f"nonconstant={nonconstant} oeis_hit={triangular_ok} "
           f"wild_nonconstant={fail['wild_total']}")
 

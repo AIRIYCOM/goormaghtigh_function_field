@@ -3,7 +3,7 @@
 # dependencies = ["sympy"]
 # ///
 r"""
-Monodromy verification  --  function field Goormaghtigh (Proposition P1)
+Monodromy verification  --  function field Goormaghtigh
 ========================================================================
 
 Corroborates the "Monodromy of f_m" paragraph of the paper's numerical
@@ -205,7 +205,7 @@ def main():
     print("  Mon(f_m)=S_{m-1} certified/corroborated : %d/28" % all_sd)
     print("  (Composite-(m-1) rigour = transposition-tree Lemma, non-computational;")
     print("   cycle-type evidence d-cycle + transposition + odd element corroborates it.)")
-    print("\nDECISION_LINE monodromy sep_distinct_all=%s S_d_all=%d/28 pari=%s"
+    print("\nSUMMARY monodromy sep_distinct_all=%s S_d_all=%d/28 pari=%s"
           % (all_sep_dist, all_sd, HAVE_PARI))
     if not (all_sep_dist and all_sd == 28):
         raise SystemExit(1)

@@ -3,14 +3,14 @@
 # dependencies = ["sympy"]
 # ///
 r"""
-L3 NUMERICAL CROSS-DISJOINTNESS  --  Proposition P1 (ff Goormaghtigh), C->B lift
+Numerical cross-disjointness  --  function-field Goormaghtigh
 ================================================================================
 
-This script supplies the numerical evidence the L4/stage6 audit flagged as the
-SOLE conditional gap in the P1 proof:
-
-    "main thm GENERALLY conditional on critval-disjointness (unconditional only
-     for 4 borderline pairs + tested range 3<=m<n<=11)"
+This script gives independent numerical corroboration of the critical-value
+disjointness that makes the closed-form genus exact.  (The paper proves this
+disjointness unconditionally over characteristic 0, via an Enestrom-Kakeya /
+forced-modulus argument; the computation here is corroboration, not a logical
+input.)
 
 The genus closed form g = 1 + [(m-1)(n-2)-(n-1)-gcd(m-1,n-1)]/2 is the GEOMETRIC
 genus ONLY IF the affine curve C_{m,n}: f_m(X)=f_n(Y) is smooth, i.e. has no
@@ -23,7 +23,7 @@ two critical VALUES coincide:
 So  C_{m,n} affine-smooth  <=>  f_m and f_n share NO common critical value
                             <=>  critvalset(f_m) cap critvalset(f_n) = {}.
 
-ESTABLISHED ALGEBRA (verified by hand upstream, re-checked here in TASK 1):
+ALGEBRA (re-checked here in TASK 1):
   f_m = (X^m-1)/(X-1).  Its critical values c satisfy
         P_m(c) := (m-1)^{m-1} c^m - m^m (c-1)^{m-1} = 0,
   with a SPURIOUS double root c=m (the x=infinity / rho=1 artifact).  The
@@ -51,7 +51,7 @@ TASKS:
      "shared critical value" to a single equation in u, and check the
      numerical (in)compatibility.
   5  Arithmetic mechanism: factor R(m,n) and test whether its prime factors all
-     divide mn(m-1)(n-1) (a ramification/Mason-Stothers style hint for prover).
+     divide mn(m-1)(n-1) (relevant to the positive-characteristic failure).
 
 RUN (from the repository root):
   uv run src/disjointness_resultant.py
@@ -230,7 +230,7 @@ def task3_noncoprime_control():
         print("  NOTE: even gcd>1 pairs are cross-disjoint => coprimality is NOT")
         print("        the mechanism for critical-value disjointness; disjointness")
         print("        is generic and holds far beyond gcd=1 (consistent with")
-        print("        L3.numerical: gcd>1 curves still irreducible, large genus).")
+        print("        the numerical scan: gcd>1 curves still irreducible, large genus).")
     else:
         print("  NOTE: gcd>1 produces shared critical values => coprimality IS the")
         print("        arithmetic gate for cross-disjointness.")
@@ -366,7 +366,7 @@ def task5_factor_R(coprime_results):
         print("     ramification / 'only the obvious primes' heuristic is INCOMPLETE.")
         print("     The extra primes are the primes p where Q_m and Q_n acquire a")
         print("     common root MOD p (i.e. p | Res), and they are NOT controlled by")
-        print("     mn(m-1)(n-1).  PROVER LINE: an unconditional disjointness proof")
+        print("     mn(m-1)(n-1).  Hence an unconditional disjointness proof")
         print("     CANNOT come from a small fixed bad-prime set; it must instead")
         print("     show Q_m, Q_n stay coprime over Q DIRECTLY (e.g. a height /")
         print("     archimedean separation of critical values, or a Bilu-Tichy")
@@ -387,7 +387,7 @@ def main():
     except Exception:
         pass
     print("=" * 78)
-    print("L3 CROSS-DISJOINTNESS  --  P1 ff Goormaghtigh, C->B lift (critval angle)")
+    print("CROSS-DISJOINTNESS  --  function-field Goormaghtigh")
     print("=" * 78)
 
     p_ok, p_rows = task1_verify_Pform()
@@ -410,7 +410,7 @@ def main():
     noncoprime_collide = "yes" if noncop_any else "no"
     print(f"\n  disjoint_all_coprime = {disjoint_all_coprime}")
     print(f"  noncoprime_collide   = {noncoprime_collide}")
-    print(f"\nDECISION_LINE disjoint_all_coprime={disjoint_all_coprime} "
+    print(f"\nSUMMARY disjoint_all_coprime={disjoint_all_coprime} "
           f"noncoprime_collide={noncoprime_collide} "
           f"P_form_ok={p_ok} R_primes_clean={primes_ok}")
 
