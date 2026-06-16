@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.0.3 — 2026-06-16
+
+**Documentation-only patch. No change to any computed result; AST-verified
+identical to v1.0.2 after removing `print()` statements and docstrings.**
+
+- Removed internal pipeline-stage labels and process notes from the script
+  docstrings and console output (`L3`, `Proposition P1`, `C->B lift`,
+  `critval angle`, an `L4/stage6 audit` quote, `PROVER LINE`); renamed the
+  machine-readable `DECISION_LINE` markers to `SUMMARY`.
+- Fixed a stale CSV filename in a docstring (`L3num_genus.csv` →
+  `genus_table.csv`, which is what the script actually writes).
+
+The scripts, their outputs, and the verdicts are unchanged.
+
 ## v1.0.2 — 2026-06-16
 
 **Documentation / correctness patch. No change to any computed result; the
