@@ -62,6 +62,7 @@ the two projections use different degrees and different R_inf values.
 """
 
 import csv
+import os
 import sys
 import json
 import subprocess
@@ -597,8 +598,9 @@ def main():
     except Exception:
         pass
     OUT_CSV = sys.argv[1] if len(sys.argv) > 1 else \
-        "research/goormaghtigh/2026-06-12/reference_goormaghtigh_research/" \
-        "prop1/data/L3num_genus.csv"
+        os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                     "..", "data", "genus_table.csv")
+    os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
 
     print("=" * 74)
     print("L3 NUMERICAL GENUS  --  Proposition P1 (function-field Goormaghtigh)")

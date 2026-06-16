@@ -53,9 +53,8 @@ TASKS:
   5  Arithmetic mechanism: factor R(m,n) and test whether its prime factors all
      divide mn(m-1)(n-1) (a ramification/Mason-Stothers style hint for prover).
 
-RUN (repo root):
-  uv run --with sympy reference_goormaghtigh_research/prop1/code/L3num_disjoint.py \
-    2>&1 | tee research/goormaghtigh/2026-06-12/reference_goormaghtigh_research/prop1/logs/L3num_disjoint.log
+RUN (from the repository root):
+  uv run src/disjointness_resultant.py
 """
 
 import sys
