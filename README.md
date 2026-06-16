@@ -62,10 +62,14 @@ pip install -r requirements.txt
 python src/genus_verification.py
 ```
 
-Total runtime is a few minutes on a single core. The default ranges in
-`enestrom_kakeya_check.py` are kept modest (`k ≤ 40`, `m ≤ 80`) for a quick
-reproduce; the paper states the same checks to `k = 59` and `m = 200/399`
-(raise `ek_kmax` / `mmax` in the script to confirm).
+Total runtime is a few minutes on a single core. The ranges used match the
+paper exactly: `enestrom_kakeya_check.py` checks the Eneström–Kakeya band for
+`3 ≤ k ≤ 59` and the forced-modulus / `G(m,n)>0` inequalities for
+`3 ≤ n < m ≤ 399`; `monodromy_verification.py` covers `3 ≤ m ≤ 30`;
+`disjointness_resultant.py` the 101 coprime pairs (`3 ≤ n < m ≤ 20` plus
+`(21,20),(25,24)`) and 11 non-coprime controls; `genus_verification.py` the
+64 coprime pairs `3 ≤ n < m ≤ 14` plus samples `m ∈ {15,16,20}` and the
+`F_q[t]` failure search (`q ∈ {5,7,11}`, `m,n ≤ 7`, `deg ≤ 4`).
 
 ## License
 
