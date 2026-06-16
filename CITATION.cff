@@ -35,6 +35,6 @@ identifiers:
     value: "10.5281/zenodo.20711111"
     description: "Concept DOI (all versions) of this software archive"
   - type: doi
-    value: "10.5281/zenodo.20712364"
-    description: "DOI of archived version v1.0.2; the v1.0.3 version DOI is minted by Zenodo on release -- backfill it here and in main.tex Code-availability afterwards"
+    value: "10.5281/zenodo.20714629"
+    description: "DOI of the archived version v1.0.3"
 repository-code: "https://github.com/AIRIYCOM/goormaghtigh_function_field"
