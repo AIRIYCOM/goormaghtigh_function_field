@@ -5,9 +5,8 @@ function field analogue of the Goormaghtigh equation"**. All results in the
 paper are proved unconditionally; the scripts here are independent
 **corroboration**, not a logical input to any proof.
 
-The main theorem: for a field `k` of characteristic `0` or of characteristic
-`p` with `p ∤ mn(m-1)(n-1)` (the *tame* range), `gcd(m,n)=1` and
-`min(m,n) ≥ 3`, the equation
+The main theorem: for an algebraically closed field `k` of characteristic `0`,
+`m ≠ n` and `min(m,n) ≥ 3`, the equation
 
 ```
 (X^m − 1)/(X − 1) = (Y^n − 1)/(Y − 1)
@@ -21,12 +20,16 @@ g(C_{m,n}) = 1 + ½ [ (m−1)(n−2) − (n−1) − gcd(m−1,n−1) ]  ≥ 1,
 ```
 
 and excludes rational (ℙ¹) parametrisations by genus non-increase.
+Coprimality of `(m,n)` is **not** required (only `m ≠ n`); the result is a
+**characteristic-0** statement — in positive characteristic the underlying
+critical-value disjointness can fail (even at tame primes), the smallest case
+being `(m,n)=(3,4)` at `p=19`.
 
 ## Contents
 
 | script | verifies | paper item |
 |---|---|---|
-| `src/genus_verification.py` | closed-form genus = Riemann–Hurwitz count (two independent projections agree); `g ≥ 1`; diagonal genera = triangular numbers (OEIS A000217); `min(m,n)<3` and `gcd>1` controls; `disc_Y` squarefree; **and the exhaustive failure search for non-constant solutions over `F_q[t]`** (tame `q∈{5,7,11}`, `m,n≤7`, `deg≤4`) | §Numerical (genus table, disc squarefree, failure search), Prop. (genus formula), Rem. (triangular) |
+| `src/genus_verification.py` | closed-form genus = Riemann–Hurwitz count (two independent projections agree); `g ≥ 1`; diagonal genera = triangular numbers (OEIS A000217); `min(m,n)<3` control and `gcd>1` corroboration (irreducible, `g≥1` — coprimality not needed); `disc_Y` squarefree; **and an exploratory positive-characteristic probe over `F_q[t]`** (`q∈{5,7,11}`, `m,n≤7`, `deg≤4`; char p is outside the char-0 theorem) | §Numerical (genus table, disc squarefree, char-p probe), Prop. (genus formula), Rem. (triangular) |
 | `src/monodromy_verification.py` | `Mon(f_m) = S_{m−1}` for `3 ≤ m ≤ 30` (PARI `polgalois` for `m−1≤11` when cypari2 present, else Dedekind/Frobenius cycle types over ~600 primes: `d`-cycle + transposition + odd element); `h_m=G_m/(X−1)^2` separable; critical values pairwise distinct | §Numerical (monodromy), Lemma (monodromy), Lemma (critical values distinct) |
 | `src/disjointness_resultant.py` | `Res_c(Q_m,Q_n) ≠ 0` (critical-value sets disjoint ⇒ affine smoothness) for all coprime and non-coprime pairs to `m ≤ 20`; `P_m(c)` form | Lemma (cross-disjointness), Lemma (smoothness) |
 | `src/enestrom_kakeya_check.py` | Eneström–Kakeya bound `|ρ|<1`, `|c|<k`; forced modulus `L^{1/(m−n)} > n`; `G(m,n) > 0` | Lemma (Eneström–Kakeya), Lemma (cross-disjointness) |

@@ -6,12 +6,14 @@ r"""
 L3 NUMERICAL GENUS — Proposition P1 (function-field Goormaghtigh theorem)
 ========================================================================
 
-Proposition P1.  Over a tame field k (char 0, or char p with p \nmid mn),
-gcd(m,n)=1 and min(m,n) >= 3, the equation
+Theorem (characteristic 0).  Over an algebraically closed field k of
+characteristic 0, for m != n and min(m,n) >= 3, the equation
 
         (X^m - 1)/(X - 1) = (Y^n - 1)/(Y - 1)
 
-has NO non-constant solution (X, Y) in \bar k(t).
+has NO non-constant solution (X, Y) in k(t).  Coprimality of (m,n) is NOT
+needed -- only m != n.  (In positive characteristic the statement can FAIL,
+even at tame primes; see TASK 5 and the paper's char-p remark.)
 
 Core lemma:  g(\widetilde C_{m,n}) >= 1, where \widetilde C_{m,n} is the
 smooth projective model of the affine curve
@@ -29,14 +31,17 @@ This L3 script PUSHES the genus evidence to the computational frontier and
 adds four cross-checks:
 
   TASK 1  Multi-scale genus scan over all gcd(m,n)=1, 3 <= n < m <= 14,
-          plus samples m in {15,16,20}.  Verify  gcd=1 & min>=3 => g>=1 with
-          NO exception.  CSV -> data/L3num_genus.csv.  Genus by Riemann-
+          plus samples m in {15,16,20}.  Verify  min>=3 & m!=n => g>=1 with
+          NO exception (coprime pairs are used as a dense sample; the theorem
+          needs only m!=n).  CSV -> data/L3num_genus.csv.  Genus by Riemann-
           Hurwitz on pi_X : C -> P^1_X (deg n-1), cross-checked against the
           symmetric pi_Y projection (genus is symmetric in m,n).
 
-  TASK 2  gcd>1 control: (4,6),(6,9),(4,8),(6,10) — genus + reducibility test
-          (verifies gcd=1 is NECESSARY; non-coprime curves can be reducible /
-          have rational components / lower the effective obstruction).
+  TASK 2  gcd>1 corroboration: (4,6),(6,9),(4,8),(6,10) -- genus + irreducibility
+          test.  These m!=n pairs are STILL irreducible with g>=1, confirming
+          that coprimality of (m,n) is NOT needed (only m!=n).  The genuinely
+          reducible case is m=n (where F = f_m(X)-f_m(Y) carries the diagonal
+          factor X-Y), never gcd>1.
 
   TASK 3  min<3 control: (2,3),(2,5),(2,7) — should give g=0 (verifies
           min>=3 is NECESSARY: m=2 makes f_2(X)=1+X linear, so X is a
@@ -45,10 +50,15 @@ adds four cross-checks:
 
   TASK 4  OEIS lookup of the m=3 genus sequence and closed-form genus fits.
 
-  TASK 5  failure search: brute-force F_q[t] (tame q in {5,7,11}, deg<=4,
-          m,n<=7) for non-constant solutions of f_m(X(t))=g_n(Y(t)) (expect
-          NONE), and a WILD-characteristic probe (p | mn) to see whether
-          non-constant solutions appear once we leave the tame regime.
+  TASK 5  positive-characteristic probe (EXPLORATORY; OUTSIDE the char-0
+          theorem): brute-force F_q[t] (q in {5,7,11}, deg<=4, m,n<=7) for
+          non-constant solutions of f_m(X(t))=g_n(Y(t)).  None are found for
+          these small (q,m,n).  This is NOT evidence for a char-p theorem:
+          the disjointness behind the theorem is archimedean and can FAIL
+          mod p even at TAME primes (p not dividing mn(m-1)(n-1)).  The
+          smallest failure is (m,n)=(3,4) at p=19, where Res_c(Q_3,Q_4)=19/16
+          vanishes mod 19, the curve gains a node and becomes rational --
+          a prime this q<=11 scan never reaches.
 
 Genus-at-infinity formula used:
     R_inf = (n-1) - gcd(m-1, n-1)      [Newton polygon of f_m(X)=g_n(Y) at oo]
@@ -129,11 +139,13 @@ def genus_both(m, n):
 
 def is_absolutely_irreducible(m, n):
     """
-    Heuristic absolute-irreducibility check of F = g_n(Y) - f_m(X) over Q:
-    return (irreducible_over_Q, n_factors).  Absolute irreducibility is
-    stronger, but for separated-variable curves with gcd(m,n)=1 the Q-factor
-    count of 1 together with the coprime branch profile at infinity certifies
-    geometric connectedness (advocate angle 2).  We report the Q-factor count.
+    Irreducibility check of F = g_n(Y) - f_m(X) over Q: return
+    (irreducible_over_Q, n_factors).  For m != n the curve is in fact
+    absolutely irreducible: f_m, f_n are indecomposable (primitive monodromy
+    S_{m-1}), and a separated-variable f(X)-g(Y) with indecomposable f, g of
+    DISTINCT degrees is absolutely irreducible (Ehrenfeucht-Tverberg when the
+    degrees are coprime; Fried / Bilu-Tichy monodromy otherwise).  We report
+    the Q-factor count as the computable witness.
     """
     F = (f_poly(X, m).as_expr() - f_poly(Y, n).as_expr())
     c, facs = factor_list(F)
@@ -225,7 +237,7 @@ def task1_scan():
 
 def task2_gcd_control():
     print("\n" + "=" * 74)
-    print("TASK 2 : gcd>1 control  (verifies gcd=1 is necessary)")
+    print("TASK 2 : gcd>1 corroboration  (coprimality is NOT needed, only m!=n)")
     print("=" * 74)
     cases = [(4, 6), (6, 9), (4, 8), (6, 10)]
     print(f"{'(m,n)':>8} {'gcd':>4} {'g':>5} {'irred/Q':>8} {'#Qfac':>6}  note")
@@ -239,9 +251,10 @@ def task2_gcd_control():
         print(f"{str((m,n)):>8} {gcd(m,n):>4} {str(g_val):>5} {str(irr):>8} "
               f"{nfac:>6}  {note}")
     any_reducible = any(not irr for (_, _, _, _, irr, _) in results)
-    print(f"\n  any gcd>1 case reducible over Q : {any_reducible}")
-    print("  (reducibility / shared factor (X-1)(Y-1) structure shows why the")
-    print("   coprimality hypothesis is genuinely used.)")
+    print(f"\n  any gcd>1 case reducible over Q : {any_reducible}  (expect False)")
+    print("  (all these m!=n pairs are irreducible with g>=1, so coprimality of")
+    print("   (m,n) is NOT used anywhere; only m!=n matters.  The reducible case")
+    print("   is the diagonal m=n, where F = f_m(X)-f_m(Y) has the factor X-Y.)")
     return results
 
 
@@ -437,7 +450,7 @@ def task4_oeis(scan):
 
 
 # ---------------------------------------------------------------------------
-# TASK 5 : failure search over F_q[t]  (tame + wild probe)
+# TASK 5 : positive-characteristic probe  (exploratory; outside the char-0 theorem)
 # ---------------------------------------------------------------------------
 
 def _pmul(a, b, p):
@@ -536,11 +549,11 @@ def search_fq(p, D, m, n, max_enum=200000):
 
 def task5_failure_search():
     print("\n" + "=" * 74)
-    print("TASK 5 : failure search over F_q[t]  (tame + wild probe)")
+    print("TASK 5 : positive-characteristic probe  (EXPLORATORY -- outside char 0)")
     print("=" * 74)
 
-    # --- tame search: q in {5,7,11}, deg<=4, m,n<=7, p \nmid mn -------------
-    print("\n  --- TAME search (q in {5,7,11}, deg<=4, m,n<=7, p|mn skipped) ---")
+    # --- search 1: q in {5,7,11}, deg<=4, m,n<=7, p | mn skipped -----------
+    print("\n  --- search 1 (q in {5,7,11}, deg<=4, m,n<=7, p|mn skipped) ---")
     print(f"  {'q':>3} {'(m,n)':>8} {'tame?':>6} {'deg<=':>6}  result")
     qs = [5, 7, 11]
     mn = sorted(set((a, b) for a in range(3, 8) for b in range(3, 8) if a != b))
@@ -560,10 +573,10 @@ def task5_failure_search():
             tame_total += len(sols)
             res = "none" if not sols else f"FOUND {len(sols)}: {sols[:2]}"
             print(f"  {p:>3} {str((m,n)):>8} {'tame':>6} {D:>6}  {res}")
-    print(f"\n  TAME non-constant solutions found (total): {tame_total}")
+    print(f"\n  search-1 (p|mn skipped) non-constant solutions found (total): {tame_total}")
 
-    # --- wild probe: p | mn (leaving tame regime) --------------------------
-    print("\n  --- WILD probe (p | mn): do non-constant solutions appear? ---")
+    # --- search 2: p | mn (wild ramification -- also outside the theorem) ---
+    print("\n  --- search 2: p | mn (wild ramification; also outside the theorem) ---")
     print(f"  {'q':>3} {'(m,n)':>8} {'p|mn':>6} {'deg<=':>6}  result")
     wild_total = 0
     wild_hits = []
@@ -590,15 +603,17 @@ def task5_failure_search():
             wild_hits.append((p, m, n, sols[:3]))
         res = "none" if not sols else f"FOUND {len(sols)}: {sols[:3]}"
         print(f"  {p:>3} {str((m,n)):>8} {'yes':>6} {D:>6}  {res}")
-    print(f"\n  WILD non-constant solutions found (total): {wild_total}")
+    print(f"\n  char-p probe non-constant solutions found (total): {wild_total}")
+    print("  NOTE: positive characteristic is OUTSIDE the char-0 theorem.  The")
+    print("  theorem-relevant char-p obstruction is NOT 'p | mn' but rather")
+    print("  p | Res_c(Q_m,Q_n) (the cross-disjointness resultant): at such primes")
+    print("  the critical values collide, the genus drops, and non-constant")
+    print("  solutions appear.  The smallest case is (m,n)=(3,4) at the TAME prime")
+    print("  p=19 (Res_c(Q_3,Q_4) = 19/16 == 0 mod 19), beyond this q<=11 scan.")
     if wild_hits:
-        print("  >>> wild characteristic DOES admit non-constant solutions:")
+        print("  (p|mn hits at this degree bound:)")
         for (p, m, n, s) in wild_hits:
             print(f"      q={p} (m,n)=({m},{n}): {s}")
-        print("  (consistent with: tameness p\\nmid mn is necessary for P1.)")
-    else:
-        print("  (no wild non-constant solutions at this degree bound; the wild")
-        print("   failure mode, if any, needs higher degree / Frobenius twists.)")
 
     return dict(tame_total=tame_total, wild_total=wild_total,
                 wild_hits=wild_hits)
@@ -642,15 +657,15 @@ def main():
     print(f"  TASK1 g>=1 holds for ALL         : {all_ge1}  (violations={viol})")
     print(f"  TASK1 MIN genus                  : {genus_min}")
     print(f"  TASK1 two-projection symmetry    : {'OK' if not scan['sym_fail'] else 'FAIL'}")
-    print(f"  TASK2 gcd>1 control              : "
+    print(f"  TASK2 gcd>1 corroboration        : "
           f"{[(m,n,g) for (m,n,_,g,_,_) in gcd_ctrl]} "
           f"reducible_any={any(not irr for *_ ,irr,_ in [(0,0,0,0,r[4],r[5]) for r in gcd_ctrl])}")
     print(f"  TASK3 min<3 control all g==0     : {min_allzero}")
     print(f"  TASK4 R_fin=(m-1)(n-2) pattern   : {oeis['rfin_pattern_ok']}")
     print(f"  TASK4 closed-form genus reproduces table : {oeis['closed_form_ok']}")
     print(f"  TASK4 best genus fit             : {oeis['best_fit']}")
-    print(f"  TASK5 tame non-constant solns    : {nonconstant}  (expect 0)")
-    print(f"  TASK5 wild non-constant solns    : {fail['wild_total']}  "
+    print(f"  TASK5 char-p probe (p|mn skipped): {nonconstant}  (none at small q; char-p NOT claimed)")
+    print(f"  TASK5 char-p probe (p|mn cases)  : {fail['wild_total']}  "
           f"hits={len(fail['wild_hits'])}")
 
     status = 'ok' if (all_ge1 and nonconstant == 0 and not scan['sym_fail']) \

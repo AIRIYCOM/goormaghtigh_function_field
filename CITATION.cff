@@ -27,7 +27,7 @@ keywords:
   - Riemann-Hurwitz
   - monodromy
 license: MIT
-version: "v1.0.1"
+version: "v1.0.2"
 date-released: "2026-06-16"
 doi: "10.5281/zenodo.20711111"
 identifiers:
@@ -36,5 +36,5 @@ identifiers:
     description: "Concept DOI (all versions) of this software archive"
   - type: doi
     value: "10.5281/zenodo.20711112"
-    description: "DOI of the archived version v1.0.1"
+    description: "DOI of the archived version v1.0.1; the v1.0.2 version DOI is minted by Zenodo on release -- backfill it here and in main.tex Code-availability afterwards"
 repository-code: "https://github.com/AIRIYCOM/goormaghtigh_function_field"
