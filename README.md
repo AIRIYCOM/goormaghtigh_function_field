@@ -26,8 +26,8 @@ and excludes rational (ℙ¹) parametrisations by genus non-increase.
 
 | script | verifies | paper item |
 |---|---|---|
-| `src/genus_verification.py` | closed-form genus = Riemann–Hurwitz count; `g ≥ 1`; diagonal genera = triangular numbers (OEIS A000217); `min(m,n)<3` and `gcd>1` controls | Prop. (genus formula), Rem. (triangular) |
-| `src/monodromy_verification.py` | `Mon(f_m) = S_{m−1}` for `3 ≤ m ≤ 30` (PARI `polgalois` for `m−1≤11`, Dedekind/Frobenius cycle types otherwise); `h_m` separable; critical values distinct | Lemma (monodromy), Lemma (critical values distinct) |
+| `src/genus_verification.py` | closed-form genus = Riemann–Hurwitz count (two independent projections agree); `g ≥ 1`; diagonal genera = triangular numbers (OEIS A000217); `min(m,n)<3` and `gcd>1` controls; `disc_Y` squarefree; **and the exhaustive failure search for non-constant solutions over `F_q[t]`** (tame `q∈{5,7,11}`, `m,n≤7`, `deg≤4`) | §Numerical (genus table, disc squarefree, failure search), Prop. (genus formula), Rem. (triangular) |
+| `src/monodromy_verification.py` | `Mon(f_m) = S_{m−1}` for `3 ≤ m ≤ 30` (PARI `polgalois` for `m−1≤11` when cypari2 present, else Dedekind/Frobenius cycle types over ~600 primes: `d`-cycle + transposition + odd element); `h_m=G_m/(X−1)^2` separable; critical values pairwise distinct | §Numerical (monodromy), Lemma (monodromy), Lemma (critical values distinct) |
 | `src/disjointness_resultant.py` | `Res_c(Q_m,Q_n) ≠ 0` (critical-value sets disjoint ⇒ affine smoothness) for all coprime and non-coprime pairs to `m ≤ 20`; `P_m(c)` form | Lemma (cross-disjointness), Lemma (smoothness) |
 | `src/enestrom_kakeya_check.py` | Eneström–Kakeya bound `|ρ|<1`, `|c|<k`; forced modulus `L^{1/(m−n)} > n`; `G(m,n) > 0` | Lemma (Eneström–Kakeya), Lemma (cross-disjointness) |
 
