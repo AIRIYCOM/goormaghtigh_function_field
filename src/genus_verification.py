@@ -182,7 +182,9 @@ def task1_scan():
                   f"{str(sym):>6} {str(dX['disc_sqfree']):>7}  "
                   f"{dX['R_fin']:>5} {dX['R_inf']:>5}{flag}")
 
-    # write CSV: canonical m,n,gcd,genus  (one row per unordered pair, m>n)
+    # write CSV: canonical m,n,gcd(m-1,n-1),genus  (one row per unordered pair, m>n).
+    # The gcd column is gcd(m-1,n-1) -- the quantity that enters the genus
+    # formula and the paper's Table 1 -- NOT gcd(m,n).
     seen = set()
     csv_rows = []
     for (m, n, gg, g_val, rf, ri, t2, sf) in rows:
@@ -190,11 +192,12 @@ def task1_scan():
         if key in seen:
             continue
         seen.add(key)
-        csv_rows.append((max(m, n), min(m, n), gg, g_val))
+        M, N = max(m, n), min(m, n)
+        csv_rows.append((M, N, gcd(M - 1, N - 1), g_val))
     csv_rows.sort()
     with open(OUT_CSV, "w", newline="") as fh:
         w = csv.writer(fh)
-        w.writerow(["m", "n", "gcd", "genus"])
+        w.writerow(["m", "n", "gcd(m-1,n-1)", "genus"])
         for r in csv_rows:
             w.writerow(r)
     print(f"\n  CSV written: {OUT_CSV}  ({len(csv_rows)} unordered pairs)")
