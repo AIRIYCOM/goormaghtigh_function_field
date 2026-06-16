@@ -1,0 +1,4 @@
+sympy>=1.12
+mpmath>=1.3
+# optional: exact Galois groups (m-1<=11) in monodromy_verification.py
+# cypari2>=2.1

@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+title: >-
+  Verification code for "On the function field analogue of the
+  Goormaghtigh equation"
+message: >-
+  If you use this software, please cite both the article and this archive.
+type: software
+authors:
+  - given-names: "[GIVEN NAME]"
+    family-names: "[FAMILY NAME]"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+    # affiliation: "[INSTITUTION]"
+abstract: >-
+  Reproduces the numerical claims of the paper "On the function field
+  analogue of the Goormaghtigh equation": the closed-form geometric genus of
+  the repunit curve and its Riemann--Hurwitz derivation, the full symmetric
+  monodromy of the repunit polynomials f_m, and the Eneström--Kakeya /
+  forced-modulus verification of critical-value disjointness. All results in
+  the paper are proved unconditionally; this code is independent
+  corroboration.
+keywords:
+  - Goormaghtigh equation
+  - repunit
+  - function field
+  - geometric genus
+  - Riemann-Hurwitz
+  - monodromy
+license: MIT
+version: "1.0.0"
+# date-released: "2026-MM-DD"   # fill on the tagged GitHub release Zenodo archives
+# Optional once the paper is published / preprinted:
+# identifiers:
+#   - type: doi
+#     value: "10.xxxx/xxxxx"
+#     description: "The article this software accompanies"
